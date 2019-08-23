@@ -83,13 +83,12 @@ Drugs = Drugs_full[newlist]
 # x-axis is efficacy; y-axis is safety
 df = data.frame(Drugs,exp_mu1[newlist],exp_mu4[newlist])
 
-# n = 13
-n = 8
-set.seed(15)
-palette <- distinctColorPalette(n)
+# color
+cbp1 <- c("#999999", "#E69F00", "#56B4E9", "#009E73",
+          "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 
 # ggplot
-pdf("/Users/jiayito/Dropbox/000_UPenn_Research/000_project/000_with_Rui/summer_2019_with_Rui/0_NMA/update_labor_circlr_plot.pdf",
+pdf("/Users/jiayito/Dropbox/000_UPenn_Research/000_project/000_with_Rui/summer_2019_with_Rui/0_NMA/update2_labor_circlr_plot.pdf",
     height=6,width=10)
 upper_mu1[newlist][6] = 1.5
 ggplot(df, aes(x = exp_mu1[newlist], y = exp_mu4[newlist])) + 
@@ -103,12 +102,9 @@ ggplot(df, aes(x = exp_mu1[newlist], y = exp_mu4[newlist])) +
   geom_text(label = as.character(1:8), size = 3.5, color = "black") +
   scale_x_continuous(limits = c(0.5,1.5),name ="Caesarean section (OR)", breaks = c(0.5,0.75,1.0,1.25,1.5)) +
   scale_y_continuous(name ="Serious neonatal morbidity or perinatal death (OR)") + 
-  scale_color_discrete(breaks=c(			
-                                "Vaginal PGE2 (gel)",			
-                                "Vaginal PGE2 pessary (slow release)",			
-                                		
-                                "Intracervical PGE2",			
-                               		
+  scale_color_manual(values = cbp1,breaks=c("Vaginal PGE2 (gel)",			
+                                "Vaginal PGE2 pessary (slow release)",	
+                                "Intracervical PGE2",
                                 "Vaginal misoprostol (Dose less than 50 mcg)",				
                                 "Vaginal misoprostol (Dose 50 mcg or more)",				
                                 "Oral misoprostol tablet (Dose less than 50 mcg)",				
