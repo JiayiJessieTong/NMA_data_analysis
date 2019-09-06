@@ -1,13 +1,4 @@
-# this code is used to draw the confidence interval labor induction data 
-# x-axis is the efficacy
-# y-axis is the safety 
-# last update: 09/06/2019
-# change all names of treatments to lower case letter
-# Create a two dimensional visualization using "Caesarean section" and "Serious neonatal morbidity or perinatal death".
-# load the results from Rui
-# with new list of drugs from Lisa
-## #2, #3, #5, #7, #8, #9, #10, #11
-# load("/Users/Jessie/Dropbox/2_Rui_and_Jessie/Summer_2019/1_Multi_NMA/Data_analysis/Results.RData")
+# 1 vs 5
 load("/Users/jiayito/Dropbox/Multi_NMA/2_dataset2/Labor_Induction/Alfirevic2015BMJ_data/Results.RData")
 
 library(ggplot2)
@@ -43,75 +34,77 @@ lower_mu1 = exp(mu1l)
 
 
 ##############################################################
-# Serious neonatal morbidity or perinatal death is data4 in "2th_data_analysis_forestplot.R"
+# Serious maternal morbidity or death is data5 in "2th_data_analysis_forestplot.R"
 ##############################################################
 ##################### data4 ################################
 l2 = length(mu2)
 l3 = length(mu3)
-l4 = length(mu4) # 13 drugs
+l4 = length(mu4) 
+l5 = length(mu5) # 11 drugs
 
-exp_mu4 = exp(mu4)
+exp_mu5 = exp(mu5)
 
-cov_matrix_mu4 = V[(l1+l2+l3+1):(l1+l2+l3+l4), (l1+l2+l3+1):(l1+l2+l3+l4)]
+cov_matrix_mu5 = V[(l1+l2+l3+l4+1):(l1+l2+l3+l4+l5), (l1+l2+l3+l4+1):(l1+l2+l3+l4+l5)]
 
-var_mu4 = diag(cov_matrix_mu4)
+var_mu5 = diag(cov_matrix_mu5)
 
-mu4u = mu4+1.96*sqrt(var_mu4)
-mu4l = mu4-1.96*sqrt(var_mu4)
+mu5u = mu5+1.96*sqrt(var_mu5)
+mu5l = mu5-1.96*sqrt(var_mu5)
 
-upper_mu4 = exp(mu4u)
-lower_mu4 = exp(mu4l)
+upper_mu5 = exp(mu5u)
+lower_mu5 = exp(mu5l)
 
 
 ###############################################
 # drug names
 # 13 labels for T1 and T2, omit last one ("placebo")
 Drugs_full = c("vaginal PGE2 (tablet)",				
-            "vaginal PGE2 (gel)",			
-            "vaginal PGE2 pessary (slow release)",			
-            "PGF2 gel",			
-            "intracervical PGE2",			
-            "vaginal PGE2 pessary (normal release)",				
-            "vaginal misoprostol (dose less than 50 mcg)",				
-            "vaginal misoprostol (dose 50 mcg or more)",				
-            "oral misoprostol tablet (dose less than 50 mcg)",				
-            "oral misoprostol tablet (dose 50mcg or more)",				
-            "titrated (low dose) oral misoprostol solution",				
-            "sustained release misoprostol vaginal pessary",	
-            "no treatment")
+               "vaginal PGE2 (gel)",			
+               "vaginal PGE2 pessary (slow release)",			
+               "PGF2 gel",			
+               "intracervical PGE2",			
+               "vaginal PGE2 pessary (normal release)",				
+               "vaginal misoprostol (dose less than 50 mcg)",				
+               "vaginal misoprostol (dose 50 mcg or more)",				
+               "oral misoprostol tablet (dose less than 50 mcg)",				
+               "oral misoprostol tablet (dose 50mcg or more)",				
+               "titrated (low dose) oral misoprostol solution",				
+               "sustained release misoprostol vaginal pessary",	
+               "no treatment")
 
 Drugs = Drugs_full[newlist]
+newlist2 = c(2,3,4,5,6,7,8,9)
 # x-axis is efficacy; y-axis is safety
-df = data.frame(Drugs,exp_mu1[newlist],exp_mu4[newlist])
+df = data.frame(Drugs,exp_mu1[newlist],exp_mu5[newlist2])
 
 # color
 cbp1 <- c("#999999", "#E69F00", "#56B4E9", "#009E73",
           "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 
 # ggplot
-pdf("/Users/jiayito/Dropbox/000_UPenn_Research/000_project/000_with_Rui/summer_2019_with_Rui/0_NMA/update3_labor_circlr_plot.pdf",
+pdf("/Users/jiayito/Dropbox/000_UPenn_Research/000_project/000_with_Rui/summer_2019_with_Rui/0_NMA/CS+SMMD_labor_circlr_plot.pdf",
     height=6,width=10)
 upper_mu1[newlist][6] = 1.5
-ggplot(df, aes(x = exp_mu1[newlist], y = exp_mu4[newlist])) + 
+ggplot(df, aes(x = exp_mu1[newlist], y = exp_mu5[newlist2])) + 
   geom_point(aes(x=1, y=1),size=5, color='red') +
   geom_hline(yintercept=1, linetype="dashed", color = "red") +
   geom_vline(xintercept=1, linetype="dashed", color = "red") +
   geom_text(label = "placebo", color = "black", aes(x=1.06, y=0.98)) +
-  geom_segment(aes(x = lower_mu1[newlist], y = exp_mu4[newlist], xend = upper_mu1[newlist] , yend = exp_mu4[newlist], color = Drugs)) +
-  geom_segment(aes(x = exp_mu1[newlist], y = lower_mu4[newlist], xend = exp_mu1[newlist] , yend = upper_mu4[newlist],color = Drugs)) +
+  geom_segment(aes(x = lower_mu1[newlist], y = exp_mu5[newlist2], xend = upper_mu1[newlist] , yend = exp_mu5[newlist2], color = Drugs)) +
+  geom_segment(aes(x = exp_mu1[newlist], y = lower_mu5[newlist2], xend = exp_mu1[newlist] , yend = upper_mu5[newlist2],color = Drugs)) +
   geom_point(aes(color = Drugs),size=5) +
   geom_text(label = as.character(1:8), size = 3.5, color = "black") +
   scale_x_continuous(limits = c(0.5,1.5),name ="Caesarean section (OR)", breaks = c(0.5,0.75,1.0,1.25,1.5)) +
-  scale_y_continuous(name ="Serious neonatal morbidity or perinatal death (OR)") + 
+  scale_y_continuous(name ="Serious maternal morbidity or death (OR)") + 
   scale_color_manual(values = cbp1,breaks=c("vaginal PGE2 (gel)",			
-                                "vaginal PGE2 pessary (slow release)",	
-                                "intracervical PGE2",
-                                "vaginal misoprostol (dose less than 50 mcg)",				
-                                "vaginal misoprostol (dose 50 mcg or more)",				
-                                "oral misoprostol tablet (dose less than 50 mcg)",				
-                                "oral misoprostol tablet (dose 50mcg or more)",				
-                                "titrated (low dose) oral misoprostol solution"		
-                                )) +
+                                            "vaginal PGE2 pessary (slow release)",	
+                                            "intracervical PGE2",
+                                            "vaginal misoprostol (dose less than 50 mcg)",				
+                                            "vaginal misoprostol (dose 50 mcg or more)",				
+                                            "oral misoprostol tablet (dose less than 50 mcg)",				
+                                            "oral misoprostol tablet (dose 50mcg or more)",				
+                                            "titrated (low dose) oral misoprostol solution"		
+  )) +
   guides(color=guide_legend(ncol=1))+
   theme_classic(base_size = 15) 
 
