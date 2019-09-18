@@ -48,20 +48,22 @@ for (i in 1:length(mu1)){
   CI[i] = paste(round(exp_mu1[i],2),"(",round(lower_mu1[i],2),",",round(upper_mu1[i],2),")")
 }
 
+new_order_1 <- order(exp_mu1)
+
 dataplot <- structure(list(
-  mean  = c(NA,NA,exp_mu1), 
-  lower = c(NA,NA,lower_mu1),
-  upper = c(NA,NA,upper_mu1)),
+  mean  = c(NA,NA,exp_mu1[new_order_1]), 
+  lower = c(NA,NA,lower_mu1[new_order_1]),
+  upper = c(NA,NA,upper_mu1[new_order_1])),
   .Names = c("mean", "lower", "upper"), 
   row.names = c(NA, -15L), 
   class = "data.frame")
 
 tabletext <- cbind(
-  c('','',label),
-  c("","OR (95% CI)",CI)
+  c('','',label[new_order_1]),
+  c("","OR (95% CI)",CI[new_order_1])
 )
 
-pdf("/Users/jiayito/Dropbox/000_UPenn_Research/000_project/000_with_Rui/summer_2019_with_Rui/0_NMA/table10.pdf",
+pdf("/Users/jiayito/Dropbox/000_UPenn_Research/000_project/000_with_Rui/summer_2019_with_Rui/0_NMA/update_table10.pdf",
     height = 8, width = 11)
 forestplot(tabletext, 
            dataplot,new_page = TRUE,
@@ -96,10 +98,12 @@ for (i in 1:length(mu2)){
   CI2[i] = paste(round(exp_mu2[i],2),"(",round(lower_mu2[i],2),",",round(upper_mu2[i],2),")")
 }
 
+new_order_2 <- order(exp_mu2)
+
 dataplot <- structure(list(
-  mean  = c(NA,NA,exp_mu2), 
-  lower = c(NA,NA,lower_mu2),
-  upper = c(NA,NA,upper_mu2)),
+  mean  = c(NA,NA,exp_mu2[new_order_2]), 
+  lower = c(NA,NA,lower_mu2[new_order_2]),
+  upper = c(NA,NA,upper_mu2[new_order_2])),
   .Names = c("mean", "lower", "upper"), 
   row.names = c(NA, -14L), 
   class = "data.frame")
@@ -107,11 +111,11 @@ dataplot <- structure(list(
 label2 = label[-4]
 
 tabletext <- cbind(
-  c('','',label2),
-  c("","OR (95% CI)",CI2)
+  c('','',label2[new_order_2]),
+  c("","OR (95% CI)",CI2[new_order_2])
 )
 
-pdf("/Users/jiayito/Dropbox/000_UPenn_Research/000_project/000_with_Rui/summer_2019_with_Rui/0_NMA/table11.pdf",
+pdf("/Users/jiayito/Dropbox/000_UPenn_Research/000_project/000_with_Rui/summer_2019_with_Rui/0_NMA/update_table11.pdf",
     height = 8, width = 11)
 forestplot(tabletext, 
            dataplot,new_page = TRUE,
@@ -146,10 +150,12 @@ for (i in 1:length(mu3)){
   CI3[i] = paste(round(exp_mu3[i],2),"(",round(lower_mu3[i],2),",",round(upper_mu3[i],2),")")
 }
 
+new_order_3 <- order(exp_mu3)
+
 dataplot <- structure(list(
-  mean  = c(NA,NA,exp_mu3), 
-  lower = c(NA,NA,lower_mu3),
-  upper = c(NA,NA,upper_mu3)),
+  mean  = c(NA,NA,exp_mu3[new_order_3]), 
+  lower = c(NA,NA,lower_mu3[new_order_3]),
+  upper = c(NA,NA,upper_mu3[new_order_3])),
   .Names = c("mean", "lower", "upper"), 
   row.names = c(NA, -14L), 
   class = "data.frame")
@@ -157,11 +163,11 @@ dataplot <- structure(list(
 label3 = label[-4]
 
 tabletext <- cbind(
-  c('','',label3),
-  c("","OR (95% CI)",CI3)
+  c('','',label3[new_order_3]),
+  c("","OR (95% CI)",CI3[new_order_3])
 )
 
-pdf("/Users/jiayito/Dropbox/000_UPenn_Research/000_project/000_with_Rui/summer_2019_with_Rui/0_NMA/table12.pdf",
+pdf("/Users/jiayito/Dropbox/000_UPenn_Research/000_project/000_with_Rui/summer_2019_with_Rui/0_NMA/update_table12.pdf",
     height = 8, width = 11)
 forestplot(tabletext, 
            dataplot,new_page = TRUE,
@@ -196,10 +202,12 @@ for (i in 1:length(mu4)){
   CI4[i] = paste(round(exp_mu4[i],2),"(",round(lower_mu4[i],2),",",round(upper_mu4[i],2),")")
 }
 
+new_order_4 <- order(exp_mu4)
+
 dataplot <- structure(list(
-  mean  = c(NA,NA,exp_mu4), 
-  lower = c(NA,NA,lower_mu4),
-  upper = c(NA,NA,upper_mu4)),
+  mean  = c(NA,NA,exp_mu4[new_order_4]), 
+  lower = c(NA,NA,lower_mu4[new_order_4]),
+  upper = c(NA,NA,upper_mu4[new_order_4])),
   .Names = c("mean", "lower", "upper"), 
   row.names = c(NA, -15L), 
   class = "data.frame")
@@ -207,11 +215,11 @@ dataplot <- structure(list(
 label4 = label
 
 tabletext <- cbind(
-  c('','',label4),
-  c("","OR (95% CI)",CI4)
+  c('','',label4[new_order_4]),
+  c("","OR (95% CI)",CI4[new_order_4])
 )
 
-pdf("/Users/jiayito/Dropbox/000_UPenn_Research/000_project/000_with_Rui/summer_2019_with_Rui/0_NMA/table13.pdf",
+pdf("/Users/jiayito/Dropbox/000_UPenn_Research/000_project/000_with_Rui/summer_2019_with_Rui/0_NMA/update_table13.pdf",
     height = 8, width = 11)
 forestplot(tabletext, 
            dataplot,new_page = TRUE,
@@ -246,10 +254,12 @@ for (i in 1:length(mu5)){
   CI5[i] = paste(round(exp_mu5[i],2),"(",round(lower_mu5[i],2),",",round(upper_mu5[i],2),")")
 }
 
+new_order_5 <- order(exp_mu5)
+
 dataplot <- structure(list(
-  mean  = c(NA,NA,exp_mu5), 
-  lower = c(NA,NA,lower_mu5),
-  upper = c(NA,NA,upper_mu5)),
+  mean  = c(NA,NA,exp_mu5[new_order_5]), 
+  lower = c(NA,NA,lower_mu5[new_order_5]),
+  upper = c(NA,NA,upper_mu5[new_order_5])),
   .Names = c("mean", "lower", "upper"), 
   row.names = c(NA, -13L), 
   class = "data.frame")
@@ -257,11 +267,11 @@ dataplot <- structure(list(
 label5 = label[-c(4,6)]
 
 tabletext <- cbind(
-  c('','',label5),
-  c("","OR (95% CI)",CI5)
+  c('','',label5[new_order_5]),
+  c("","OR (95% CI)",CI5[new_order_5])
 )
 
-pdf("/Users/jiayito/Dropbox/000_UPenn_Research/000_project/000_with_Rui/summer_2019_with_Rui/0_NMA/table14.pdf",
+pdf("/Users/jiayito/Dropbox/000_UPenn_Research/000_project/000_with_Rui/summer_2019_with_Rui/0_NMA/update_table14.pdf",
     height = 8, width = 11)
 forestplot(tabletext, 
            dataplot,new_page = TRUE,
