@@ -9,7 +9,9 @@ library(mvtnorm)
 library(ggplot2)
 library(reshape)
 library(scales)
-source("/Users/Jessie/Dropbox/2_Rui_and_Jessie/Summer_2019/1_Multi_NMA/Data_analysis")
+library(plyr)
+# source("/Users/Jessie/Dropbox/2_Rui_and_Jessie/Summer_2019/1_Multi_NMA/Data_analysis")\
+load("/Users/jiayito/Dropbox/2_Rui_and_Jessie/Summer_2019/1_Multi_NMA/Data_analysis/Results.RData")
 
 #Run analysis
 out = CLNMA.equal.tau.fullout(dataout)
@@ -59,15 +61,29 @@ datm$Treatments = as.character(datm$Treatments)
 l1 = c("citalopram","escitalopram", "fluoxetine","fluvoxamine", "paroxetine", "sertraline")
 datm$Treatments =mapvalues(datm$Treatment, from =1:6, to=l1)
 
+# cpb1 = c("#AD9ED7", "#E07680", "#7ED9CA", "#BD5AD8", "#D6CEBD", "#B7DB65")
+cpb1 = c("#D6CEBD", "#E07680", "#7ED9CA","#B7DB65","#AD9ED7","#BD5AD8")
 # ggplot
-pdf("/Users/Jessie/Desktop/000_UPenn_Research/000_project/000_with_Rui/summer_2019_with_Rui/0_NMA/update_prob_ranking_6drugs_efficacy_50000.pdf",height=7,width=11)
+pdf("/Users/jiayito/Dropbox/000_UPenn_Research/000_project/000_with_Rui/summer_2019_with_Rui/0_NMA/0917_update_prob_ranking_6drugs_efficacy_50000.pdf",height=6,width=10)
 ggplot(datm,aes(x = rank, y = Probability,fill = Treatments)) + 
   geom_bar(position = "fill",stat = "identity",color='black') +
-  scale_fill_manual("Drugs", values = c("white","#cfcfcd", "#a7a6a3", "#787878", "#575757","black")) +
+  scale_fill_manual("Drugs", values = cpb1) +
   scale_y_continuous(labels = percent_format())+
   xlab("Ranks") + ylab("% probability to rank at each place") +
   ggtitle("Efficacy Only")+theme(plot.title = element_text(hjust = 0.5,face = "bold")) +
-  theme_classic(base_size = 15)
+  theme_classic(base_size = 20)
+grid.text("1",
+          x = unit(0.816, "npc"), y = unit(0.585, "npc"),just = "left",  gp=gpar(fontsize=11))
+grid.text("2",
+          x = unit(0.816, "npc"), y = unit(0.585 -0.041, "npc"),just = "left",  gp=gpar(fontsize=11))
+grid.text("3",
+          x = unit(0.816, "npc"), y = unit(0.585-2*0.040, "npc"),just = "left",  gp=gpar(fontsize=11))
+grid.text("4",
+          x = unit(0.816, "npc"), y = unit(0.585-3*0.040, "npc"),just = "left",  gp=gpar(fontsize=11))
+grid.text("5",
+          x = unit(0.816, "npc"), y = unit(0.585-4*0.040, "npc"),just = "left",  gp=gpar(fontsize=11))
+grid.text("6",
+          x = unit(0.816, "npc"), y = unit(0.585-5*0.040, "npc"),just = "left",  gp=gpar(fontsize=11))
 dev.off()
 
 ########################### Efficacy 50% +Safety 50% ################################
@@ -94,13 +110,13 @@ datm$Treatments = as.character(datm$Treatments)
 l1 = c("citalopram","escitalopram", "fluoxetine","fluvoxamine", "paroxetine", "sertraline")
 datm$Treatments =mapvalues(datm$Treatment, from =1:6, to=l1)
 
-pdf("/Users/Jessie/Desktop/000_UPenn_Research/000_project/000_with_Rui/summer_2019_with_Rui/0_NMA/update_prob_ranking_6drugs_50+50_50000.pdf",height=7,width=11)
+pdf("/Users/jiayito/Dropbox/000_UPenn_Research/000_project/000_with_Rui/summer_2019_with_Rui/0_NMA/0917_update_prob_ranking_6drugs_50+50_50000.pdf",height=6,width=10)
 ggplot(datm,aes(x = rank, y = Probability,fill = Treatments)) + 
   geom_bar(position = "fill",stat = "identity",color='black') +
   xlab("Ranks") + ylab("% probability to rank at each place") +
-  scale_fill_manual("Drugs", values = c("white","#cfcfcd", "#a7a6a3", "#787878", "#575757","black")) +
+  scale_fill_manual("Drugs", values = cpb1) +
   scale_y_continuous(labels = percent_format())+ggtitle("50%Efficacy+50%Safety")+theme(plot.title = element_text(hjust = 0.5,face = "bold")) +
-  theme_classic(base_size = 15)
+  theme_classic(base_size = 20)
 dev.off()
 
 ######################### Safety Only ##################################
@@ -126,13 +142,13 @@ datm$Treatments = as.character(datm$Treatments)
 l1 = c("citalopram","escitalopram", "fluoxetine","fluvoxamine", "paroxetine", "sertraline")
 datm$Treatments =mapvalues(datm$Treatment, from =1:6, to=l1)
 
-pdf("/Users/Jessie/Desktop/000_UPenn_Research/000_project/000_with_Rui/summer_2019_with_Rui/0_NMA/update_prob_ranking_6drugs_safety_50000.pdf",height=7,width=11)
+pdf("/Users/jiayito/Dropbox/000_UPenn_Research/000_project/000_with_Rui/summer_2019_with_Rui/0_NMA/0917_update_prob_ranking_6drugs_safety_50000.pdf",height=6,width=10)
 ggplot(datm,aes(x = rank, y = Probability,fill = Treatments)) + 
   geom_bar(position = "fill",stat = "identity",color='black') +
   xlab("Ranks") + ylab("% probability to rank at each place") +
-  scale_fill_manual("Drugs", values = c("white","#cfcfcd", "#a7a6a3", "#787878", "#575757","black")) +
+  scale_fill_manual("Drugs", values = cpb1) +
   scale_y_continuous(labels = percent_format())+ggtitle("Safety Only")+theme(plot.title = element_text(hjust = 0.5,face = "bold"))+
-  theme_classic(base_size = 15)
+  theme_classic(base_size = 20)
 dev.off()
 ##########################################################################
 ########################## done  #########################################
@@ -171,15 +187,26 @@ datm$Treatments = as.character(datm$Treatments)
 l2 = c("desvenlafaxine", "duloxetine", "levomilnacipran", "milnacipran", "venlafaxine")
 datm$Treatments =mapvalues(datm$Treatment, from =1:5, to=l2)
 
+cpb2 = c("#A5D9CD", "#DE8F7F", "#B29ED5", "#C259D1", "#B5DC6B")
 # ggplot
-pdf("/Users/Jessie/Desktop/000_UPenn_Research/000_project/000_with_Rui/summer_2019_with_Rui/0_NMA/update_prob_ranking_5drugs_efficacy_50000.pdf",height=7,width=11)
+pdf("/Users/jiayito/Dropbox/000_UPenn_Research/000_project/000_with_Rui/summer_2019_with_Rui/0_NMA/0917_update_prob_ranking_5drugs_efficacy_50000.pdf",height=6,width=10)
 ggplot(datm,aes(x = rank, y = Probability,fill = Treatments)) + 
   geom_bar(position = "fill",stat = "identity",color="black") +
-  scale_fill_manual("Drugs", values = c("white","#cfcfcd", "#a7a6a3", "#787878", "black")) +
+  scale_fill_manual("Drugs", values = cpb2) +
   scale_y_continuous(labels = percent_format())+
   xlab("Ranks") + ylab("% probability to rank at each place") +
   ggtitle("Efficacy Only")+theme(plot.title = element_text(hjust = 0.5,face = "bold")) +
-  theme_classic(base_size = 15)
+  theme_classic(base_size = 20)
+grid.text("1",
+          x = unit(0.790, "npc"), y = unit(0.565, "npc"),just = "left",  gp=gpar(fontsize=11))
+grid.text("2",
+          x = unit(0.790, "npc"), y = unit(0.565 -0.042, "npc"),just = "left",  gp=gpar(fontsize=11))
+grid.text("3",
+          x = unit(0.790, "npc"), y = unit(0.567- 2* 0.042, "npc"),just = "left",  gp=gpar(fontsize=11))
+grid.text("4",
+          x = unit(0.790, "npc"), y = unit(0.567-3*0.042, "npc"),just = "left",  gp=gpar(fontsize=11))
+grid.text("5",
+          x = unit(0.790, "npc"), y = unit(0.571-4*0.042, "npc"),just = "left",  gp=gpar(fontsize=11))
 dev.off()
 
 
@@ -208,14 +235,14 @@ l2 = c("desvenlafaxine", "duloxetine", "levomilnacipran", "milnacipran", "venlaf
 datm$Treatments =mapvalues(datm$Treatment, from =1:5, to=l2)
 
 # ggplot
-pdf("/Users/Jessie/Desktop/000_UPenn_Research/000_project/000_with_Rui/summer_2019_with_Rui/0_NMA/update_prob_ranking_5drugs_50+50_50000.pdf",height=7,width=11)
+pdf("/Users/jiayito/Dropbox/000_UPenn_Research/000_project/000_with_Rui/summer_2019_with_Rui/0_NMA/0917_update_prob_ranking_5drugs_50+50_50000.pdf",height=6,width=10)
 ggplot(datm,aes(x = rank, y = Probability,fill = Treatments)) + 
   geom_bar(position = "fill",stat = "identity",color="black") +
-  scale_fill_manual("Drugs", values = c("white","#cfcfcd", "#a7a6a3", "#787878", "black")) +
+  scale_fill_manual("Drugs", values = cpb2) +
   scale_y_continuous(labels = percent_format())+
   xlab("Ranks") + ylab("% probability to rank at each place") +
   ggtitle("50%Efficacy+50%Safety")+theme(plot.title = element_text(hjust = 0.5,face = "bold")) +
-  theme_classic(base_size = 15)
+  theme_classic(base_size = 20)
 dev.off()
 
 ######################### Safety Only ##################################
@@ -242,14 +269,14 @@ l2 = c("desvenlafaxine", "duloxetine", "levomilnacipran", "milnacipran", "venlaf
 datm$Treatments =mapvalues(datm$Treatment, from =1:5, to=l2)
 
 # ggplot
-pdf("/Users/Jessie/Desktop/000_UPenn_Research/000_project/000_with_Rui/summer_2019_with_Rui/0_NMA/update_prob_ranking_5drugs_safety_50000.pdf",height=7,width=11)
+pdf("/Users/jiayito/Dropbox/000_UPenn_Research/000_project/000_with_Rui/summer_2019_with_Rui/0_NMA/0917_update_prob_ranking_5drugs_safety_50000.pdf",height=6,width=10)
 ggplot(datm,aes(x = rank, y = Probability,fill = Treatments)) + 
   geom_bar(position = "fill",stat = "identity",color="black") +
-  scale_fill_manual("Drugs", values = c("white","#cfcfcd", "#a7a6a3", "#787878","black")) +
+  scale_fill_manual("Drugs", values = cpb2) +
   scale_y_continuous(labels = percent_format())+
   xlab("Ranks") + ylab("% probability to rank at each place") +
   ggtitle("Safety Only")+theme(plot.title = element_text(hjust = 0.5,face = "bold")) +
-  theme_classic(base_size = 15)
+  theme_classic(base_size = 20)
 dev.off()
 ##########################################################################
 ########################## done  #########################################

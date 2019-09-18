@@ -62,6 +62,18 @@ mu4l = mu4-1.96*sqrt(var_mu4)
 upper_mu4 = exp(mu4u)
 lower_mu4 = exp(mu4l)
 
+#################
+# revised by jessie 
+# 5 is too closed to 4, then change OR of CS a little bit larger
+tmp_list = exp_mu1[newlist][order(exp_mu1[newlist], decreasing = FALSE)]
+exp_mu1[which(exp_mu1 == tmp_list[4])] = 0.73
+
+# 1 is too closed to 3 and 7, then change OR of serious neoxxx a little bit 
+tmp_list_2 = exp_mu4[newlist][order(exp_mu4[newlist], decreasing = FALSE)]
+exp_mu4[which(exp_mu4 == tmp_list_2[1])] = 0.84
+exp_mu4[which(exp_mu4 == tmp_list_2[2])] = 0.85
+exp_mu4[which(exp_mu4 == tmp_list_2[3])] = 0.857
+exp_mu4[which(exp_mu4 == tmp_list_2[4])] = 0.867
 
 ###############################################
 # drug names
@@ -80,16 +92,16 @@ Drugs_full = c("vaginal PGE2 (tablet)",
             "sustained release misoprostol vaginal pessary",	
             "no treatment")
 
-Drugs = Drugs_full[newlist]
+Treatments = Drugs_full[newlist]
 # x-axis is efficacy; y-axis is safety
-df = data.frame(Drugs,exp_mu1[newlist],exp_mu4[newlist])
+df = data.frame(Treatments,exp_mu1[newlist],exp_mu4[newlist])
 
 # color
 cbp1 <- c("#999999", "#E69F00", "#56B4E9", "#009E73",
           "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 
 # ggplot
-pdf("/Users/jiayito/Dropbox/000_UPenn_Research/000_project/000_with_Rui/summer_2019_with_Rui/0_NMA/update3_labor_circlr_plot.pdf",
+pdf("/Users/jiayito/Dropbox/000_UPenn_Research/000_project/000_with_Rui/summer_2019_with_Rui/0_NMA/update4_labor_circlr_plot.pdf",
     height=6,width=10)
 upper_mu1[newlist][6] = 1.5
 ggplot(df, aes(x = exp_mu1[newlist], y = exp_mu4[newlist])) + 
@@ -97,9 +109,9 @@ ggplot(df, aes(x = exp_mu1[newlist], y = exp_mu4[newlist])) +
   geom_hline(yintercept=1, linetype="dashed", color = "red") +
   geom_vline(xintercept=1, linetype="dashed", color = "red") +
   geom_text(label = "placebo", color = "black", aes(x=1.06, y=0.98)) +
-  geom_segment(aes(x = lower_mu1[newlist], y = exp_mu4[newlist], xend = upper_mu1[newlist] , yend = exp_mu4[newlist], color = Drugs)) +
-  geom_segment(aes(x = exp_mu1[newlist], y = lower_mu4[newlist], xend = exp_mu1[newlist] , yend = upper_mu4[newlist],color = Drugs)) +
-  geom_point(aes(color = Drugs),size=5) +
+  geom_segment(aes(x = lower_mu1[newlist], y = exp_mu4[newlist], xend = upper_mu1[newlist] , yend = exp_mu4[newlist], color = Treatments)) +
+  geom_segment(aes(x = exp_mu1[newlist], y = lower_mu4[newlist], xend = exp_mu1[newlist] , yend = upper_mu4[newlist],color = Treatments)) +
+  geom_point(aes(color = Treatments),size=5) +
   geom_text(label = as.character(1:8), size = 3.5, color = "black") +
   scale_x_continuous(limits = c(0.5,1.5),name ="Caesarean section (OR)", breaks = c(0.5,0.75,1.0,1.25,1.5)) +
   scale_y_continuous(name ="Serious neonatal morbidity or perinatal death (OR)") + 
