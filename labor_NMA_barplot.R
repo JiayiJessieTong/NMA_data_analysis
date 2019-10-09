@@ -4,7 +4,7 @@
 # to "serious maternal morbidity or death" (mu5)
 # and 
 # "Caesarean section". mu1
-# last update: 08/21/2019
+# last update: 10/08/2019
 # inverse the order of ranks
 
 library(mvtnorm)
@@ -101,50 +101,54 @@ levels(as.factor(datm$Treatments))
 ### color = 
 cbp1 <- c( "#D55E00", "#CC79A7","#999999", "#0072B2",
            "#F0E442","#56B4E9", "#E69F00", "#009E73")
+# cbp1 <- c("#999999", "#E69F00", "#56B4E9", "#009E73",
+          # "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 # ggplot
-pdf("/Users/jiayito/Dropbox/000_UPenn_Research/000_project/000_with_Rui/summer_2019_with_Rui/0_NMA/update3_2nd_barplot_10+90.pdf",height=6,width=10)
+datm$Treatments = factor(datm$Treatments, levels = Drugs)
+
+pdf("/Users/jiayito/Dropbox/000_UPenn_Research/000_project/000_with_Rui/summer_2019_with_Rui/0_NMA/update_1008_fixed_update3_2nd_barplot_10+90.pdf",height=6,width=10)
 ggplot(datm,aes(x = rank, y = Probability,fill = Treatments)) + 
   geom_bar(position = "fill",stat = "identity",color='black') +
-  # scale_fill_manual("Drugs", values = palette) +
+  scale_fill_manual("Drugs", values = cbp1) +
   scale_y_continuous(labels = percent_format())+
   xlab("Ranks") + ylab("% probability to rank at each place") +
   ggtitle("90% Serious maternal morbidity or death\n+10% Caesarean section")+
   theme(plot.title = element_text(hjust = 0.5,face = "bold")) +
-  theme_classic(base_size = 15) + 
-  scale_fill_manual( breaks=c(			
-    "vaginal PGE2 (gel)",			
-    "vaginal PGE2 pessary (slow release)",			
-    "intracervical PGE2",			
-    "vaginal misoprostol (dose less than 50 mcg)",				
-    "vaginal misoprostol (dose 50 mcg or more)",				
-    "oral misoprostol tablet (dose less than 50 mcg)",				
-    "oral misoprostol tablet (dose 50mcg or more)",				
-    "titrated (low dose) oral misoprostol solution"		
-  ),values =c(			
-    "vaginal PGE2 (gel)" = cbp1[1],			
-    "vaginal PGE2 pessary (slow release)"= cbp1[2],			
-    "intracervical PGE2"= cbp1[3],			
-    "vaginal misoprostol (dose less than 50 mcg)"= cbp1[4],				
-    "vaginal misoprostol (dose 50 mcg or more)"= cbp1[5],				
-    "oral misoprostol tablet (dose less than 50 mcg)"= cbp1[6],				
-    "oral misoprostol tablet (dose 50mcg or more)"= cbp1[7],				
-    "titrated (low dose) oral misoprostol solution"= cbp1[8]))
+  theme_classic(base_size = 15)  
+  # scale_fill_manual( breaks=c(
+  #   "vaginal PGE2 (gel)",
+  #   "vaginal PGE2 pessary (slow release)",
+  #   "intracervical PGE2",
+  #   "vaginal misoprostol (dose less than 50 mcg)",
+  #   "vaginal misoprostol (dose 50 mcg or more)",
+  #   "oral misoprostol tablet (dose less than 50 mcg)",
+  #   "oral misoprostol tablet (dose 50mcg or more)",
+  #   "titrated (low dose) oral misoprostol solution"
+  # ),values =c(
+  #   "vaginal PGE2 (gel)" = cbp1[1],
+  #   "vaginal PGE2 pessary (slow release)"= cbp1[2],
+  #   "intracervical PGE2"= cbp1[3],
+  #   "vaginal misoprostol (dose less than 50 mcg)"= cbp1[4],
+  #   "vaginal misoprostol (dose 50 mcg or more)"= cbp1[5],
+  #   "oral misoprostol tablet (dose less than 50 mcg)"= cbp1[6],
+  #   "oral misoprostol tablet (dose 50mcg or more)"= cbp1[7],
+  #   "titrated (low dose) oral misoprostol solution"= cbp1[8]))
 
-grid.text("1",
-          x = unit(0.607, "npc"), y = unit(0.607, "npc"),just = "left",  gp=gpar(fontsize=11))
-grid.text("2",
-          x = unit(0.607, "npc"), y = unit(0.565, "npc"),just = "left",  gp=gpar(fontsize=11))
 grid.text("3",
+          x = unit(0.607, "npc"), y = unit(0.607, "npc"),just = "left",  gp=gpar(fontsize=11))
+grid.text("7",
+          x = unit(0.607, "npc"), y = unit(0.565, "npc"),just = "left",  gp=gpar(fontsize=11))
+grid.text("6",
           x = unit(0.607, "npc"), y = unit(0.567-0.042, "npc"),just = "left",  gp=gpar(fontsize=11))
-grid.text("4",
+grid.text("8",
           x = unit(0.607, "npc"), y = unit(0.567-2*0.042, "npc"),just = "left",  gp=gpar(fontsize=11))
 grid.text("5",
           x = unit(0.607, "npc"), y = unit(0.571-3*0.042, "npc"),just = "left",  gp=gpar(fontsize=11))
-grid.text("6",
+grid.text("4",
           x = unit(0.607, "npc"), y = unit(0.574-4*0.042, "npc"),just = "left",  gp=gpar(fontsize=11))
-grid.text("7",
+grid.text("1",
           x = unit(0.607, "npc"), y = unit(0.575-5*0.042, "npc"),just = "left",  gp=gpar(fontsize=11))
-grid.text("8",
+grid.text("2",
           x = unit(0.607, "npc"), y = unit(0.578-6*0.042, "npc"),just = "left",  gp=gpar(fontsize=11))
 dev.off()
 
@@ -175,50 +179,51 @@ colnames(datm) = c("Treatments", "rank","Probability")
 datm$Treatments = as.character(datm$Treatments)
 l1 = Drugs
 datm$Treatments =mapvalues(datm$Treatment, from =8:1, to=l1)
+datm$Treatments = factor(datm$Treatments, levels = Drugs)
 
-pdf("/Users/jiayito/Dropbox/000_UPenn_Research/000_project/000_with_Rui/summer_2019_with_Rui/0_NMA/update3_2nd_barplot_50+50.pdf",height=6,width=10)
+pdf("/Users/jiayito/Dropbox/000_UPenn_Research/000_project/000_with_Rui/summer_2019_with_Rui/0_NMA/update_1008_fixed_update3_2nd_barplot_50+50.pdf",height=6,width=10)
 ggplot(datm,aes(x = rank, y = Probability,fill = Treatments)) + 
   geom_bar(position = "fill",stat = "identity",color='black') +
   xlab("Ranks") + ylab("% probability to rank at each place") +
-  # scale_fill_manual("Drugs", values = palette) +
+  scale_fill_manual("Drugs", values = cbp1) +
   scale_y_continuous(labels = percent_format())+
   ggtitle("50% Serious maternal morbidity or death\n+50% Caesarean section")+
   theme(plot.title = element_text(hjust = 0.5,face = "bold")) +
-  theme_classic(base_size = 15)  + 
-  scale_fill_manual( breaks=c(			
-    "vaginal PGE2 (gel)",			
-    "vaginal PGE2 pessary (slow release)",			
-    "intracervical PGE2",			
-    "vaginal misoprostol (dose less than 50 mcg)",				
-    "vaginal misoprostol (dose 50 mcg or more)",				
-    "oral misoprostol tablet (dose less than 50 mcg)",				
-    "oral misoprostol tablet (dose 50mcg or more)",				
-    "titrated (low dose) oral misoprostol solution"		
-  ),values =c(			
-    "vaginal PGE2 (gel)" = cbp1[1],			
-    "vaginal PGE2 pessary (slow release)"= cbp1[2],			
-    "intracervical PGE2"= cbp1[3],			
-    "vaginal misoprostol (dose less than 50 mcg)"= cbp1[4],				
-    "vaginal misoprostol (dose 50 mcg or more)"= cbp1[5],				
-    "oral misoprostol tablet (dose less than 50 mcg)"= cbp1[6],				
-    "oral misoprostol tablet (dose 50mcg or more)"= cbp1[7],				
-    "titrated (low dose) oral misoprostol solution"= cbp1[8]))
-grid.text("1",
-          x = unit(0.607, "npc"), y = unit(0.607, "npc"),just = "left",  gp=gpar(fontsize=11))
-grid.text("2",
-          x = unit(0.607, "npc"), y = unit(0.565, "npc"),just = "left",  gp=gpar(fontsize=11))
-grid.text("3",
-          x = unit(0.607, "npc"), y = unit(0.567-0.042, "npc"),just = "left",  gp=gpar(fontsize=11))
-grid.text("4",
-          x = unit(0.607, "npc"), y = unit(0.567-2*0.042, "npc"),just = "left",  gp=gpar(fontsize=11))
-grid.text("5",
-          x = unit(0.607, "npc"), y = unit(0.571-3*0.042, "npc"),just = "left",  gp=gpar(fontsize=11))
-grid.text("6",
-          x = unit(0.607, "npc"), y = unit(0.574-4*0.042, "npc"),just = "left",  gp=gpar(fontsize=11))
-grid.text("7",
-          x = unit(0.607, "npc"), y = unit(0.575-5*0.042, "npc"),just = "left",  gp=gpar(fontsize=11))
-grid.text("8",
-          x = unit(0.607, "npc"), y = unit(0.578-6*0.042, "npc"),just = "left",  gp=gpar(fontsize=11))
+  theme_classic(base_size = 15)  
+#   scale_fill_manual( breaks=c(			
+#     "vaginal PGE2 (gel)",			
+#     "vaginal PGE2 pessary (slow release)",			
+#     "intracervical PGE2",			
+#     "vaginal misoprostol (dose less than 50 mcg)",				
+#     "vaginal misoprostol (dose 50 mcg or more)",				
+#     "oral misoprostol tablet (dose less than 50 mcg)",				
+#     "oral misoprostol tablet (dose 50mcg or more)",				
+#     "titrated (low dose) oral misoprostol solution"		
+#   ),values =c(			
+#     "vaginal PGE2 (gel)" = cbp1[1],			
+#     "vaginal PGE2 pessary (slow release)"= cbp1[2],			
+#     "intracervical PGE2"= cbp1[3],			
+#     "vaginal misoprostol (dose less than 50 mcg)"= cbp1[4],				
+#     "vaginal misoprostol (dose 50 mcg or more)"= cbp1[5],				
+#     "oral misoprostol tablet (dose less than 50 mcg)"= cbp1[6],				
+#     "oral misoprostol tablet (dose 50mcg or more)"= cbp1[7],				
+#     "titrated (low dose) oral misoprostol solution"= cbp1[8]))
+# grid.text("1",
+#           x = unit(0.607, "npc"), y = unit(0.607, "npc"),just = "left",  gp=gpar(fontsize=11))
+# grid.text("2",
+#           x = unit(0.607, "npc"), y = unit(0.565, "npc"),just = "left",  gp=gpar(fontsize=11))
+# grid.text("3",
+#           x = unit(0.607, "npc"), y = unit(0.567-0.042, "npc"),just = "left",  gp=gpar(fontsize=11))
+# grid.text("4",
+#           x = unit(0.607, "npc"), y = unit(0.567-2*0.042, "npc"),just = "left",  gp=gpar(fontsize=11))
+# grid.text("5",
+#           x = unit(0.607, "npc"), y = unit(0.571-3*0.042, "npc"),just = "left",  gp=gpar(fontsize=11))
+# grid.text("6",
+#           x = unit(0.607, "npc"), y = unit(0.574-4*0.042, "npc"),just = "left",  gp=gpar(fontsize=11))
+# grid.text("7",
+#           x = unit(0.607, "npc"), y = unit(0.575-5*0.042, "npc"),just = "left",  gp=gpar(fontsize=11))
+# grid.text("8",
+#           x = unit(0.607, "npc"), y = unit(0.578-6*0.042, "npc"),just = "left",  gp=gpar(fontsize=11))
 dev.off()
 
 ######################### 90% + 10% ##################################
@@ -245,55 +250,57 @@ C3 = data.frame(C3)
 colnames(C3) = as.character(1:8)
 
 
+new_order <- c()
 datm <- melt(cbind(C3, ind = rownames(C3)), id.vars = c('ind'))
 colnames(datm) = c("Treatments", "rank","Probability")
 datm$Treatments = as.character(datm$Treatments)
 l1 = Drugs
 datm$Treatments =mapvalues(datm$Treatment, from =8:1, to=l1)
+datm$Treatments = factor(datm$Treatments, levels = Drugs)
 
-pdf("/Users/jiayito/Dropbox/000_UPenn_Research/000_project/000_with_Rui/summer_2019_with_Rui/0_NMA/update3_2nd_barplot_90+10.pdf",height=6,width=10)
+pdf("/Users/jiayito/Dropbox/000_UPenn_Research/000_project/000_with_Rui/summer_2019_with_Rui/0_NMA/update_1008_fixed_update3_2nd_barplot_90+10.pdf",height=6,width=10)
 ggplot(datm,aes(x = rank, y = Probability,fill = Treatments)) + 
   geom_bar(position = "fill",stat = "identity",color='black') +
   xlab("Ranks") + ylab("% probability to rank at each place") +
-  # scale_fill_manual("Drugs", values =  palette) +
+  scale_fill_manual("Drugs", values =  cbp1) +
   scale_y_continuous(labels = percent_format())+
   ggtitle("10% Serious maternal morbidity or death\n+90% Caesarean section")+
   theme(plot.title = element_text(hjust = 0.5,face = "bold"))+
-  theme_classic(base_size = 15)  + 
-  scale_fill_manual( breaks=c(			
-    "vaginal PGE2 (gel)",			
-    "vaginal PGE2 pessary (slow release)",			
-    "intracervical PGE2",			
-    "vaginal misoprostol (dose less than 50 mcg)",				
-    "vaginal misoprostol (dose 50 mcg or more)",				
-    "oral misoprostol tablet (dose less than 50 mcg)",				
-    "oral misoprostol tablet (dose 50mcg or more)",				
-    "titrated (low dose) oral misoprostol solution"		
-  ),values =c(			
-    "vaginal PGE2 (gel)" = cbp1[1],			
-    "vaginal PGE2 pessary (slow release)"= cbp1[2],			
-    "intracervical PGE2"= cbp1[3],			
-    "vaginal misoprostol (dose less than 50 mcg)"= cbp1[4],				
-    "vaginal misoprostol (dose 50 mcg or more)"= cbp1[5],				
-    "oral misoprostol tablet (dose less than 50 mcg)"= cbp1[6],				
-    "oral misoprostol tablet (dose 50mcg or more)"= cbp1[7],				
-    "titrated (low dose) oral misoprostol solution"= cbp1[8]))
-grid.text("1",
-          x = unit(0.607, "npc"), y = unit(0.607, "npc"),just = "left",  gp=gpar(fontsize=11))
-grid.text("2",
-          x = unit(0.607, "npc"), y = unit(0.565, "npc"),just = "left",  gp=gpar(fontsize=11))
-grid.text("3",
-          x = unit(0.607, "npc"), y = unit(0.567-0.042, "npc"),just = "left",  gp=gpar(fontsize=11))
-grid.text("4",
-          x = unit(0.607, "npc"), y = unit(0.567-2*0.042, "npc"),just = "left",  gp=gpar(fontsize=11))
-grid.text("5",
-          x = unit(0.607, "npc"), y = unit(0.571-3*0.042, "npc"),just = "left",  gp=gpar(fontsize=11))
-grid.text("6",
-          x = unit(0.607, "npc"), y = unit(0.574-4*0.042, "npc"),just = "left",  gp=gpar(fontsize=11))
-grid.text("7",
-          x = unit(0.607, "npc"), y = unit(0.575-5*0.042, "npc"),just = "left",  gp=gpar(fontsize=11))
-grid.text("8",
-          x = unit(0.607, "npc"), y = unit(0.578-6*0.042, "npc"),just = "left",  gp=gpar(fontsize=11))
+  theme_classic(base_size = 15)   
+#   scale_fill_manual( breaks=c(			
+#     "vaginal PGE2 (gel)",			
+#     "vaginal PGE2 pessary (slow release)",			
+#     "intracervical PGE2",			
+#     "vaginal misoprostol (dose less than 50 mcg)",				
+#     "vaginal misoprostol (dose 50 mcg or more)",				
+#     "oral misoprostol tablet (dose less than 50 mcg)",				
+#     "oral misoprostol tablet (dose 50mcg or more)",				
+#     "titrated (low dose) oral misoprostol solution"		
+#   ),values =c(			
+#     "vaginal PGE2 (gel)" = cbp1[1],			
+#     "vaginal PGE2 pessary (slow release)"= cbp1[2],			
+#     "intracervical PGE2"= cbp1[3],			
+#     "vaginal misoprostol (dose less than 50 mcg)"= cbp1[4],				
+#     "vaginal misoprostol (dose 50 mcg or more)"= cbp1[5],				
+#     "oral misoprostol tablet (dose less than 50 mcg)"= cbp1[6],				
+#     "oral misoprostol tablet (dose 50mcg or more)"= cbp1[7],				
+#     "titrated (low dose) oral misoprostol solution"= cbp1[8]))
+# grid.text("1",
+#           x = unit(0.607, "npc"), y = unit(0.607, "npc"),just = "left",  gp=gpar(fontsize=11))
+# grid.text("2",
+#           x = unit(0.607, "npc"), y = unit(0.565, "npc"),just = "left",  gp=gpar(fontsize=11))
+# grid.text("3",
+#           x = unit(0.607, "npc"), y = unit(0.567-0.042, "npc"),just = "left",  gp=gpar(fontsize=11))
+# grid.text("4",
+#           x = unit(0.607, "npc"), y = unit(0.567-2*0.042, "npc"),just = "left",  gp=gpar(fontsize=11))
+# grid.text("5",
+#           x = unit(0.607, "npc"), y = unit(0.571-3*0.042, "npc"),just = "left",  gp=gpar(fontsize=11))
+# grid.text("6",
+#           x = unit(0.607, "npc"), y = unit(0.574-4*0.042, "npc"),just = "left",  gp=gpar(fontsize=11))
+# grid.text("7",
+#           x = unit(0.607, "npc"), y = unit(0.575-5*0.042, "npc"),just = "left",  gp=gpar(fontsize=11))
+# grid.text("8",
+#           x = unit(0.607, "npc"), y = unit(0.578-6*0.042, "npc"),just = "left",  gp=gpar(fontsize=11))
 dev.off()
 ##########################################################################
 ########################## done  #########################################

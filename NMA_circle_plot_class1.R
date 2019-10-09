@@ -73,7 +73,7 @@ set.seed(4321)
 palette <- distinctColorPalette(n)
 
 # ggplot
-pdf("/Users/jiayito/Dropbox/000_UPenn_Research/000_project/000_with_Rui/summer_2019_with_Rui/0_NMA/class1_update_eff_safety_2dim.pdf",height=7,width=11)
+pdf("/Users/jiayito/Dropbox/000_UPenn_Research/000_project/000_with_Rui/summer_2019_with_Rui/0_NMA/1001_class1_update_eff_safety_2dim.pdf",height=7,width=11)
 ggplot(df, aes(x = exp_mu1, y = exp_mu2, fill = Drugs, color = Drugs)) + 
   geom_point(aes(x=1, y=1),color='red',size=5)+
   geom_hline(yintercept=1, linetype="dashed", color = "red") +
@@ -83,8 +83,8 @@ ggplot(df, aes(x = exp_mu1, y = exp_mu2, fill = Drugs, color = Drugs)) +
   geom_segment(aes(x = exp_mu1, y = lower_mu2, xend = exp_mu1 , yend = upper_mu2)) +
   geom_point(aes(fill=Drugs,colour = Drugs),size=5) +
   geom_text(label = as.character(1:6), color = "black", size = 3.5) +
-  scale_x_continuous(limits = c(1,2.3),name ="Efficacy (OR)", breaks = c(1,1.25,1.5,1.75,2,2.25)) +
-  scale_y_continuous(name ="Safety (OR)") +
+  scale_x_continuous(limits = c(1,2.3),name ="Efficacy (Response Rate)", breaks = c(1,1.25,1.5,1.75,2,2.25)) +
+  scale_y_reverse(name ="Safety (Dropout Rate)") +
   scale_colour_manual(values = palette)+
   guides(color=guide_legend(ncol=1))+
   theme_classic(base_size = 15)

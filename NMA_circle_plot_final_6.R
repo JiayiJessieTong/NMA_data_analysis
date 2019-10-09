@@ -1,7 +1,7 @@
 # this code is used to draw the confidence interval for 21 drugs
 # x-axis is the efficacy
 # y-axis is the safety 
-# last update: 05/27/2019
+# last update: 10/08/2019
 # load the results from Rui
 # load("/Users/Jessie/Dropbox/2_Rui_and_Jessie/Summer_2019/1_Multi_NMA/Data_analysis/Results.RData")
 load("/Users/jiayito/Dropbox/2_Rui_and_Jessie/Summer_2019/1_Multi_NMA/Data_analysis/Results.RData")
@@ -52,10 +52,8 @@ upper_mu2 = exp(mu2u)
 lower_mu2 = exp(mu2l)
 
 # drug names
-Drugs = rownames(table(Data$treatment))[-16]
-
 # class2 name list
-class2_list = c(6,7,11,12,19)
+class2_list = c(6,7,8,9,11,17)
 Drugs = Drugs[class2_list]
 exp_mu1 = exp_mu1[class2_list]
 exp_mu2 = exp_mu2[class2_list]
@@ -68,13 +66,15 @@ upper_mu2 = upper_mu2[class2_list]
 # x-axis is efficacy; y-axis is safety
 df = data.frame(exp_mu1,exp_mu2, Drugs)
 
-n = 5
-set.seed(11)
+n = 6
+set.seed(4321)
 # palette <- distinctColorPalette(n)
-palette <- c("#A5D9CD", "#DE8F7F", "#B29ED5", "#C259D1", "#B5DC6B")
+palette = c("#D6CEBD", "#E07680", "#7ED9CA","#B7DB65","#AD9ED7","#BD5AD8")
+
 
 # ggplot
-pdf("/Users/jiayito/Dropbox/000_UPenn_Research/000_project/000_with_Rui/summer_2019_with_Rui/0_NMA/1001_class2_update_eff_safety_2dim.pdf",height=7,width=11)
+# pdf("/Users/Jessie/Desktop/000_UPenn_Research/000_project/000_with_Rui/summer_2019_with_Rui/0_NMA/update_eff_safety_2dim.pdf",height=7,width=11)
+pdf("/Users/jiayito/Dropbox/000_UPenn_Research/000_project/000_with_Rui/summer_2019_with_Rui/0_NMA/1008_final_update_eff_safety_2dim.pdf",height=7,width=11)
 ggplot(df, aes(x = exp_mu1, y = exp_mu2, fill = Drugs, color = Drugs)) + 
   geom_point(aes(x=1, y=1),color='red',size=5)+
   geom_hline(yintercept=1, linetype="dashed", color = "red") +
@@ -83,7 +83,7 @@ ggplot(df, aes(x = exp_mu1, y = exp_mu2, fill = Drugs, color = Drugs)) +
   geom_segment(aes(x = lower_mu1, y = exp_mu2, xend = upper_mu1 , yend = exp_mu2)) +
   geom_segment(aes(x = exp_mu1, y = lower_mu2, xend = exp_mu1 , yend = upper_mu2)) +
   geom_point(aes(fill=Drugs,colour = Drugs),size=5) +
-  geom_text(label = as.character(1:5), color = "black", size = 3.5) +
+  geom_text(label = as.character(1:6), color = "black", size = 3.5) +
   scale_y_reverse(name ="Safety (Dropout Rate)") + 
   scale_x_continuous(limits = c(1,2.3),name ="Efficacy (Response Rate)", breaks = c(1,1.25,1.5,1.75,2,2.25)) +
   # scale_y_continuous() +
@@ -92,17 +92,19 @@ ggplot(df, aes(x = exp_mu1, y = exp_mu2, fill = Drugs, color = Drugs)) +
   theme_classic(base_size = 15)
 
 grid.text("1",
-          x = unit(0.853, "npc"), y = unit(0.582, "npc"),just = "left",  gp=gpar(fontsize=10))
+          x = unit(0.854, "npc"), y = unit(0.602, "npc"),just = "left",  gp=gpar(fontsize=10))
 grid.text("2",
-          x = unit(0.853, "npc"), y = unit(0.582-0.032, "npc"),just = "left",  gp=gpar(fontsize=10))
+          x = unit(0.854, "npc"), y = unit(0.602-0.035, "npc"),just = "left",  gp=gpar(fontsize=10))
 grid.text("3",
-          x = unit(0.853, "npc"), y = unit(0.580-2*0.032, "npc"),just = "left",  gp=gpar(fontsize=10))
+          x = unit(0.854, "npc"), y = unit(0.602-2*0.035, "npc"),just = "left",  gp=gpar(fontsize=10))
 grid.text("4",
-          x = unit(0.853, "npc"), y = unit(0.580-3*0.033, "npc"),just = "left",  gp=gpar(fontsize=10))
+          x = unit(0.854, "npc"), y = unit(0.602-3*0.035, "npc"),just = "left",  gp=gpar(fontsize=10))
 grid.text("5",
-          x = unit(0.853, "npc"), y = unit(0.579-4*0.033, "npc"),just = "left",  gp=gpar(fontsize=10))
-dev.off() 
+          x = unit(0.854, "npc"), y = unit(0.602-4*0.035, "npc"),just = "left",  gp=gpar(fontsize=10))
+grid.text("6",
+          x = unit(0.854, "npc"), y = unit(0.602-5*0.035, "npc"),just = "left",  gp=gpar(fontsize=10))
 
+dev.off() 
 # save image
 # save.image("/Users/Jessie/Desktop/000_UPenn_Research/000_project/000_with_Rui/summer_2019_with_Rui/0_NMA/Results_JT.RData")
 

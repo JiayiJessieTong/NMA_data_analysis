@@ -101,20 +101,21 @@ cbp1 <- c("#999999", "#E69F00", "#56B4E9", "#009E73",
           "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 
 # ggplot
-pdf("/Users/jiayito/Dropbox/000_UPenn_Research/000_project/000_with_Rui/summer_2019_with_Rui/0_NMA/update4_labor_circlr_plot.pdf",
+pdf("/Users/jiayito/Dropbox/000_UPenn_Research/000_project/000_with_Rui/summer_2019_with_Rui/0_NMA/1008_reverse_update4_labor_circlr_plot.pdf",
     height=6,width=10)
 upper_mu1[newlist][6] = 1.5
 ggplot(df, aes(x = exp_mu1[newlist], y = exp_mu4[newlist])) + 
   geom_point(aes(x=1, y=1),size=5, color='red') +
   geom_hline(yintercept=1, linetype="dashed", color = "red") +
-  geom_vline(xintercept=1, linetype="dashed", color = "red") +
-  geom_text(label = "placebo", color = "black", aes(x=1.06, y=0.98)) +
+  geom_vline(xintercept=1, linetype="dashed", color = "red") + 
+  geom_text(label = "placebo", color = "black", aes(x=0.94, y=1.02)) +
   geom_segment(aes(x = lower_mu1[newlist], y = exp_mu4[newlist], xend = upper_mu1[newlist] , yend = exp_mu4[newlist], color = Treatments)) +
   geom_segment(aes(x = exp_mu1[newlist], y = lower_mu4[newlist], xend = exp_mu1[newlist] , yend = upper_mu4[newlist],color = Treatments)) +
   geom_point(aes(color = Treatments),size=5) +
   geom_text(label = as.character(1:8), size = 3.5, color = "black") +
-  scale_x_continuous(limits = c(0.5,1.5),name ="Caesarean section (OR)", breaks = c(0.5,0.75,1.0,1.25,1.5)) +
-  scale_y_continuous(name ="Serious neonatal morbidity or perinatal death (OR)") + 
+  # scale_x_reverse(limits = c(0.5,1.5),name ="Caesarean section (OR)", breaks = c(0.5,0.75,1.0,1.25,1.5)) +
+  scale_x_reverse(name ="Caesarean section (OR)") + 
+  scale_y_reverse(name ="Serious neonatal morbidity or perinatal death (OR)") + 
   scale_color_manual(values = cbp1,breaks=c("vaginal PGE2 (gel)",			
                                 "vaginal PGE2 pessary (slow release)",	
                                 "intracervical PGE2",
